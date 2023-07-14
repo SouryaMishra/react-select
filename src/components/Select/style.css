@@ -1,0 +1,84 @@
+:root {
+    --hover-color:rgb(199, 242, 242);
+    --selected-option-bg-color:rgb(54, 169, 169);
+    --outline-color: rgb(105, 210, 210);
+    --outline-width: 3px;
+    --outline-offset: -2px;
+    --border-radius: 8px;
+    --border-color: 2px solid #dedbdb;
+    --box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.select {
+    max-width: 600px;
+    margin: 1rem auto;
+    position: relative;
+}
+
+.select__trigger {
+    width: 100%;
+    display: inline-block;
+    border-radius: var(--border-radius);
+    position: relative;
+    min-height: 40px;
+    border: var(--border-color);
+    outline: 0;
+    cursor: pointer;
+    text-align: left;
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+}
+
+.select__trigger:focus{
+    outline: var( --outline-width) solid var(--outline-color);
+    outline-offset: var(--outline-offset);
+}
+
+.select__trigger::after{
+    content: "";
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    border: 1px solid black;
+    border-right: none;
+    border-bottom: none;
+    height: 0.5rem;
+    width: 0.5rem;
+    transform: translateY(calc(-50% + 3px)) rotate(45deg);
+}
+
+.select__trigger.open::after{
+    transform: translateY(calc(-50% - 3px)) rotate(225deg);
+}
+
+.select__list {
+    position: absolute;
+    margin: 0;
+    top: calc(100% + 1rem);
+    left:0;
+    right:0;
+    list-style: none;
+    padding: 8px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.select__list-option {
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.select__list-option + .select__list-option  {
+    margin-top: 4px;
+}
+
+.select__list-option:hover{
+    background-color: var(--hover-color);
+}
+
+.select__list-option.selected {
+    background-color: var(--selected-option-bg-color);
+    color: #fff;
+    font-weight: 600;
+}
