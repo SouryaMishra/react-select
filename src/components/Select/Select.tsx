@@ -20,6 +20,10 @@ export const Select: React.FC<ISelectProps> = ({
     if (isListShown) {
       listItemRefs.current[0]?.classList.add("focused");
       listRef.current?.focus();
+      listRef.current?.setAttribute(
+        "aria-activedescendant",
+        listItemRefs.current[0]?.id
+      );
     }
   }, [isListShown]);
 
@@ -40,10 +44,18 @@ export const Select: React.FC<ISelectProps> = ({
       const nextIndex = currItemIndex === length - 1 ? 0 : currItemIndex + 1;
       listItemRefs.current[currItemIndex].classList.remove("focused");
       listItemRefs.current[nextIndex].classList.add("focused");
+      listRef.current?.setAttribute(
+        "aria-activedescendant",
+        listItemRefs.current[nextIndex].id
+      );
     } else if (e.key === "ArrowUp") {
       const prevIndex = currItemIndex === 0 ? length - 1 : currItemIndex - 1;
       listItemRefs.current[currItemIndex].classList.remove("focused");
       listItemRefs.current[prevIndex].classList.add("focused");
+      listRef.current?.setAttribute(
+        "aria-activedescendant",
+        listItemRefs.current[prevIndex].id
+      );
     } else if (e.key === "Escape" || e.key === "Tab") {
       closePopup();
     } else if (e.key === " " || e.key === "Enter") {
@@ -60,6 +72,8 @@ export const Select: React.FC<ISelectProps> = ({
   return (
     <div className="select" ref={divRef}>
       <button
+        aria-haspopup="listbox"
+        aria-expanded={isListShown ? "true" : "false"}
         className={`select__trigger${isListShown ? " open" : ""}`}
         onClick={() => {
           setIsListShown((shown) => !shown);
@@ -70,6 +84,7 @@ export const Select: React.FC<ISelectProps> = ({
       </button>
       {isListShown ? (
         <ul
+          role="listbox"
           tabIndex={-1}
           className="select__list"
           ref={listRef}
@@ -77,6 +92,10 @@ export const Select: React.FC<ISelectProps> = ({
         >
           {options.map((option, index) => (
             <li
+              role="option"
+              aria-selected={
+                option.value === selectedOption?.value ? "true" : "false"
+              }
               key={option.id}
               className={`select__list-option${
                 option.value === selectedOption?.value ? " selected" : ""
