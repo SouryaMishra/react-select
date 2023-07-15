@@ -6,10 +6,6 @@ export const useOutsideClick = (
 ) => {
   useEffect(() => {
     const clickHandler = (e: MouseEvent) => {
-      console.log(
-        e.target,
-        !nodeRef.current?.contains(e.target as HTMLElement)
-      );
       if (nodeRef.current && !nodeRef.current.contains(e.target as HTMLElement))
         callback();
     };
