@@ -90,29 +90,32 @@ export const Select: React.FC<ISelectProps> = ({
           ref={listRef}
           onKeyDown={handleKeyDown}
         >
-          {options.map((option, index) => (
+          {options.map(({ id, text, value, render }, index) => (
             <li
               role="option"
-              aria-selected={
-                option.value === selectedOption?.value ? "true" : "false"
-              }
-              key={option.id}
+              aria-selected={value === selectedOption?.value ? "true" : "false"}
+              key={id}
               className={`select__list-option${
-                option.value === selectedOption?.value ? " selected" : ""
+                value === selectedOption?.value ? " selected" : ""
               }`}
-              id={`option-${option.id}`}
-              data-id={option.id}
-              data-text={option.text}
-              data-value={option.value}
+              id={`option-${id}`}
+              data-id={id}
+              data-text={text}
+              data-value={value}
               onClick={() => {
-                onSelect(option);
+                onSelect({ id, text, value });
                 setIsListShown(false);
               }}
               ref={(el) => {
                 if (el) listItemRefs.current[index] = el;
               }}
             >
-              {option.text}
+              {typeof render === "function"
+                ? render(
+                    { id, text, value },
+                    { emoji: index === 2 ? "😎" : "😂" }
+                  )
+                : text}
             </li>
           ))}
         </ul>
