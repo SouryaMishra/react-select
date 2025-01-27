@@ -93,7 +93,7 @@ export const Select: React.FC<ISelectProps> = ({
         {isListShown ? (
           <ul
             role="listbox"
-            tabIndex={-1}
+            tabIndex={0}
             className="select__list"
             ref={listRef}
             onKeyDown={handleKeyDown}
